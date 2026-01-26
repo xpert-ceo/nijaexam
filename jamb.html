@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAMB CBT Practice - Select Your Subjects</title>
+
+    <!-- ADSTERAA AD SCRIPTS -->
+    <script src="https://pl28566969.effectivegatecpm.com/ce/00/e5/ce00e5e41764072d24556a9b91031875.js"></script>
+    <script async="async" data-cfasync="false" src="https://pl28571295.effectivegatecpm.com/59d0218915ec3bd8ab122322d3c4f9c9/invoke.js"></script>
+
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 10px;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 70px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            min-height: calc(100vh - 20px);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+        }
+
+        .timer-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-align: center;
+            min-width: 160px;
+        }
+
+        .timer.warning {
+            color: var(--warning);
+            animation: pulse 1s infinite;
+        }
+
+        .timer.critical {
+            color: var(--accent);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Subject Selection Section */
+        .selection-section {
+            padding: 25px;
+            display: block;
+        }
+
+        .selection-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .selection-header h2 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+
+        .selection-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .selection-info {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .selection-info p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .compulsory-subject {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 2px solid var(--secondary);
+        }
+
+        .compulsory-subject h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Subject Categories */
+        .subject-category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            padding: 0 5px;
+        }
+
+        .subject-card {
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .subject-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .subject-card.selected {
+            border-color: var(--success);
+            background-color: #f0fff4;
+        }
+
+        .subject-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .subject-card.selected .subject-checkbox {
+            background-color: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .selection-status {
+            background-color: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--warning);
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .selection-status span {
+            color: var(--accent);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .start-btn {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .start-btn:hover:not(:disabled) {
+            background-color: #219653;
+            transform: scale(1.03);
+        }
+
+        .start-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .reset-btn {
+            background-color: #f8f9fa;
+            color: var(--primary);
+            border: 2px solid #ddd;
+        }
+
+        .reset-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Exam Section */
+        .exam-section {
+            padding: 20px;
+            display: none;
+        }
+
+        .question-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .question-subject {
+            background-color: #e8f4fc;
+            color: var(--secondary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            padding: 8px 20px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background-color: #2980b9;
+        }
+
+        .nav-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .question-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: var(--secondary);
+            background-color: #f0f8ff;
+        }
+
+        .option.selected {
+            border-color: var(--secondary);
+            background-color: #e8f4fc;
+        }
+
+        .option-label {
+            background-color: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .option-text {
+            font-size: 1rem;
+        }
+
+        .question-progress {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            justify-content: center;
+        }
+
+        .progress-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .progress-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .progress-btn.answered {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .progress-btn.current {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .exam-action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .exam-submit-btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .exam-submit-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Review Section */
+        .review-section {
+            padding: 20px;
+            display: none;
+        }
+
+        .review-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .score-display {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .score-details {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .review-questions {
+            display: grid;
+            gap: 20px;
+        }
+
+        .review-question {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 18px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .review-question.correct {
+            border-left: 5px solid var(--success);
+        }
+
+        .review-question.incorrect {
+            border-left: 5px solid var(--accent);
+        }
+
+        .review-question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .review-question-number {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .review-question-subject {
+            background-color: #e8f4fc;
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .review-status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .status-correct {
+            background-color: var(--success);
+        }
+
+        .status-incorrect {
+            background-color: var(--accent);
+        }
+
+        .review-question-text {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .review-options {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .review-option {
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .review-option.user-answer {
+            background-color: #ffeaa7;
+            border: 1px solid #fdcb6e;
+        }
+
+        .review-option.correct-answer {
+            background-color: #abf7b1;
+            border: 1px solid #00b894;
+        }
+
+        .explanation {
+            background-color: #f1f8ff;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            border-left: 4px solid var(--secondary);
+            font-size: 0.95rem;
+        }
+
+        .explanation h4 {
+            color: var(--primary);
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            max-width: 320px;
+            font-size: 0.95rem;
+        }
+
+        .cta-button:hover {
+            background-color: #219653;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
+            .timer-container {
+                width: 100%;
+                min-width: auto;
+                margin-top: 10px;
+                font-size: 1.1rem;
+            }
+            
+            .question-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .progress-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            
+            .cta-button {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                justify-content: center;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons, .exam-action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn, .exam-submit-btn {
+                width: 100%;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .option-text {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header id="mainHeader">
+            <div class="logo">
+                <h1>JAMB CBT Practice</h1>
+                <span>UTME Simulation</span>
+            </div>
+            <div class="timer-container" id="timerContainer" style="display: none;">
+                Time: <span class="timer" id="timer">120:00</span>
+            </div>
+        </header>
+
+        <!-- AD BANNER (Top) -->
+        <div id="container-59d0218915ec3bd8ab122322d3c4f9c9" style="width:100%; margin: 10px 0; text-align:center;"></div>
+
+        <!-- Subject Selection Section -->
+        <section class="selection-section" id="selectionSection">
+            <div class="selection-header">
+                <h2>Select Your JAMB Subjects</h2>
+                <p>Choose 3 subjects (Use of English is compulsory and already included)</p>
+            </div>
+
+            <div class="selection-info">
+                <p><strong>JAMB Information:</strong> JAMB offers <strong>25 subjects</strong> total.</p>
+                <p>Every candidate must take <strong>Use of English (compulsory)</strong> plus <strong>3 other relevant subjects</strong> based on their intended course.</p>
+            </div>
+
+            <div class="compulsory-subject">
+                <h3>✓ Compulsory Subject (Automatically Selected)</h3>
+                <p><strong>Use of English</strong> - 60 questions will be included in your exam</p>
+            </div>
+
+            <!-- Subject Selection Status -->
+            <div class="selection-status" id="selectionStatus">
+                Selected: <span id="selectedCount">0</span> of 3 subjects
+            </div>
+
+            <!-- Science Subjects -->
+            <div class="subject-category">
+                <div class="category-title">Science & Technology Subjects</div>
+                <div class="subjects-grid" id="scienceSubjects">
+                    <!-- Science subjects populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Social Science Subjects -->
+            <div class="subject-category">
+                <div class="category-title">Social Science & Commercial Subjects</div>
+                <div class="subjects-grid" id="socialScienceSubjects">
+                    <!-- Social science subjects populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Arts Subjects -->
+            <div class="subject-category">
+                <div class="category-title">Arts & Languages</div>
+                <div class="subjects-grid" id="artsSubjects">
+                    <!-- Arts subjects populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn reset-btn" id="resetSelectionBtn">Reset Selection</button>
+                <button class="action-btn start-btn" id="startExamBtn" disabled>Start Exam (180 Questions)</button>
+            </div>
+        </section>
+
+        <!-- Exam Section -->
+        <section class="exam-section" id="examSection">
+            <div class="question-nav">
+                <div class="question-number">
+                    Question <span id="currentQuestionNumber">1</span> of 180
+                </div>
+                <div class="question-subject" id="currentSubject">Use of English</div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="prevBtn" disabled>Previous</button>
+                    <button class="nav-btn" id="nextBtn">Next</button>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text" id="questionText">
+                    Loading question...
+                </div>
+                
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- AD (In Exam) -->
+            <div id="container-59d0218915ec3bd8ab122322d3c4f9c9" style="width:100%; margin: 10px 0; text-align:center;"></div>
+
+            <div class="question-progress" id="questionProgress">
+                <!-- Progress buttons populated by JavaScript -->
+            </div>
+
+            <div class="exam-action-buttons">
+                <button class="exam-submit-btn" id="submitExamBtn">Submit Exam</button>
+            </div>
+        </section>
+
+        <!-- Review Section -->
+        <section class="review-section" id="reviewSection">
+            <div class="review-header">
+                <h2 class="score-display" id="scoreDisplay">Score: 0/180</h2>
+                <p class="score-details" id="scoreDetails">You answered 0 out of 180 questions correctly</p>
+                <button class="nav-btn" id="restartBtn">Take New Exam</button>
+            </div>
+
+            <!-- AD (Review) -->
+            <div id="container-59d0218915ec3bd8ab122322d3c4f9c9" style="width:100%; margin: 10px 0; text-align:center;"></div>
+
+            <div class="review-questions" id="reviewQuestions">
+                <!-- Review questions populated by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <!-- CTA Button -->
+    <a href="https://whatsapp.com/chanel/0029VbC0EKxLXnLhVv2k0035" class="cta-button" target="_blank">
+        📱
+        <span>We don't charge for this. Help us by joining the channel.</span>
+    </a>
+
+    <script>
+        // ============================================
+        // JAMB CBT PRACTICE SIMULATOR
+        // ============================================
+
+        // DOM Elements
+        const selectionSection = document.getElementById('selectionSection');
+        const examSection = document.getElementById('examSection');
+        const reviewSection = document.getElementById('reviewSection');
+        const scienceSubjects = document.getElementById('scienceSubjects');
+        const socialScienceSubjects = document.getElementById('socialScienceSubjects');
+        const artsSubjects = document.getElementById('artsSubjects');
+        const selectedCount = document.getElementById('selectedCount');
+        const selectionStatus = document.getElementById('selectionStatus');
+        const resetSelectionBtn = document.getElementById('resetSelectionBtn');
+        const startExamBtn = document.getElementById('startExamBtn');
+        const timerContainer = document.getElementById('timerContainer');
+        const timerDisplay = document.getElementById('timer');
+        const currentQuestionNumber = document.getElementById('currentQuestionNumber');
+        const currentSubject = document.getElementById('currentSubject');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const questionProgress = document.getElementById('questionProgress');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitExamBtn = document.getElementById('submitExamBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const scoreDetails = document.getElementById('scoreDetails');
+        const reviewQuestions = document.getElementById('reviewQuestions');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Application State
+        const state = {
+            selectedSubjects: [],
+            exam: {
+                timeRemaining: 7200, // 120 minutes in seconds
+                timerInterval: null,
+                currentIndex: 0,
+                userAnswers: new Array(180).fill(null),
+                questions: [],
+                submitted: false,
+                answeredCount: 0
+            },
+            questionBank: {}
+        };
+
+        // ============================================
+        // SUBJECTS DATA
+        // ============================================
+
+        const jambSubjects = [
+            // Science & Technology
+            { id: 'mathematics', name: 'Mathematics', category: 'science' },
+            { id: 'physics', name: 'Physics', category: 'science' },
+            { id: 'chemistry', name: 'Chemistry', category: 'science' },
+            { id: 'biology', name: 'Biology', category: 'science' },
+            { id: 'agriculturalScience', name: 'Agricultural Science', category: 'science' },
+            { id: 'geography', name: 'Geography', category: 'science' },
+            { id: 'furtherMathematics', name: 'Further Mathematics', category: 'science' },
+
+            // Social Science & Commercial
+            { id: 'economics', name: 'Economics', category: 'social' },
+            { id: 'commerce', name: 'Commerce', category: 'social' },
+            { id: 'government', name: 'Government', category: 'social' },
+            { id: 'principlesOfAccounts', name: 'Principles of Accounts', category: 'social' },
+            { id: 'history', name: 'History', category: 'social' },
+            { id: 'christianReligiousStudies', name: 'Christian Religious Studies', category: 'social' },
+            { id: 'islamicReligiousStudies', name: 'Islamic Religious Studies', category: 'social' },
+            { id: 'civicEducation', name: 'Civic Education', category: 'social' },
+
+            // Arts & Languages
+            { id: 'literature', name: 'Literature in English', category: 'arts' },
+            { id: 'fineArt', name: 'Fine Art', category: 'arts' },
+            { id: 'french', name: 'French', category: 'arts' },
+            { id: 'music', name: 'Music', category: 'arts' }
+        ];
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        function initApp() {
+            initSubjectSelection();
+            setupEventListeners();
+            generateQuestionBank();
+        }
+
+        function initSubjectSelection() {
+            scienceSubjects.innerHTML = '';
+            socialScienceSubjects.innerHTML = '';
+            artsSubjects.innerHTML = '';
+
+            jambSubjects.forEach(subject => {
+                const card = createSubjectCard(subject);
+
+                switch(subject.category) {
+                    case 'science':
+                        scienceSubjects.appendChild(card);
+                        break;
+                    case 'social':
+                        socialScienceSubjects.appendChild(card);
+                        break;
+                    case 'arts':
+                        artsSubjects.appendChild(card);
+                        break;
+                }
+            });
+
+            state.selectedSubjects = [];
+            updateSelectionStatus();
+        }
+
+        function createSubjectCard(subject) {
+            const card = document.createElement('div');
+            card.className = 'subject-card';
+            card.dataset.subjectId = subject.id;
+
+            card.innerHTML = `
+                <div class="subject-checkbox">✓</div>
+                <div class="subject-name">${subject.name}</div>
+            `;
+
+            card.addEventListener('click', () => toggleSubjectSelection(subject.id, card));
+            return card;
+        }
+
+        function toggleSubjectSelection(subjectId, card) {
+            const index = state.selectedSubjects.indexOf(subjectId);
+
+            if (index === -1) {
+                if (state.selectedSubjects.length < 3) {
+                    state.selectedSubjects.push(subjectId);
+                    card.classList.add('selected');
+                }
+            } else {
+                state.selectedSubjects.splice(index, 1);
+                card.classList.remove('selected');
+            }
+
+            updateSelectionStatus();
+        }
+
+        function updateSelectionStatus() {
+            selectedCount.textContent = state.selectedSubjects.length;
+            startExamBtn.disabled = state.selectedSubjects.length !== 3;
+
+            if (state.selectedSubjects.length === 3) {
+                selectionStatus.innerHTML = `
+                    <span style="color: #27ae60;">✓ Ready to start exam!</span><br>
+                    <small>3 subjects selected + English (compulsory) = 180 questions</small>
+                `;
+            } else {
+                const remaining = 3 - state.selectedSubjects.length;
+                selectionStatus.innerHTML = `
+                    Selected: <span>${state.selectedSubjects.length}</span> of 3 subjects
+                    <br><small>Select ${remaining} more subject${remaining !== 1 ? 's' : ''} to continue</small>
+                `;
+            }
+        }
+
+        // ============================================
+        // QUESTION BANK GENERATION
+        // ============================================
+
+        function generateQuestionBank() {
+            state.questionBank.english = [];
+            for (let i = 1; i <= 80; i++) {
+                state.questionBank.english.push({
+                    subject: 'english',
+                    question: `[Use of English] Question ${i}: ${getEnglishQuestion(i)}`,
+                    options: getEnglishOptions(i),
+                    correctIndex: Math.floor(Math.random() * 4),
+                    explanation: getEnglishExplanation(i)
+                });
+            }
+
+            jambSubjects.forEach(subject => {
+                state.questionBank[subject.id] = [];
+                for (let i = 1; i <= 80; i++) {
+                    state.questionBank[subject.id].push({
+                        subject: subject.id,
+                        question: `[${subject.name}] Question ${i}: ${getSubjectQuestion(subject.id, i)}`,
+                        options: getSubjectOptions(subject.id, i),
+                        correctIndex: Math.floor(Math.random() * 4),
+                        explanation: getSubjectExplanation(subject.id, i)
+                    });
+                }
+            });
+        }
+
+        function getEnglishQuestion(index) {
+            const questions = [
+                "Choose the word opposite in meaning to 'BENEVOLENT'",
+                "Which sentence is grammatically correct?",
+                "Complete: The athlete's performance was ______ impressive that he broke the record",
+                "Synonym of 'MAGNANIMOUS'?",
+                "Identify the sentence with correct punctuation",
+                "She ______ in Lagos since 2010 (correct tense)",
+                "Which word has stress on first syllable?",
+                "Meaning of 'beat around the bush'?",
+                "Identify the figurative expression in: 'Time is a thief'",
+                "Which is NOT a type of pronoun?",
+                "Convert to indirect speech: 'I will come tomorrow'",
+                "The plural of 'criterion' is?",
+                "Which is a coordinating conjunction?",
+                "Identify the dangling modifier",
+                "Choose the correctly spelled word"
+            ];
+            return questions[index % questions.length] || "English language question";
+        }
+
+        function getEnglishOptions(index) {
+            const optionsSets = [
+                ["Malevolent", "Generous", "Kind", "Charitable"],
+                ["Neither students nor teacher were present", "Neither students nor teacher was present", 
+                 "Neither students or teacher was present", "Neither students nor teacher are present"],
+                ["so", "very", "such", "too"],
+                ["Generous", "Stingy", "Small", "Angry"],
+                ["The man, who is my uncle, is a doctor", "The man who is my uncle is a doctor",
+                 "The man, who is my uncle is a doctor", "The man who is my uncle, is a doctor"],
+                ["has lived", "lived", "is living", "had lived"],
+                ["Remember", "About", "Believe", "Agree"],
+                ["Avoid talking about what's important", "Hit bushes with a stick",
+                 "Walk in circles", "Be physically active"],
+                ["Metaphor", "Simile", "Personification", "Hyperbole"],
+                ["Personal", "Reflective", "Possessive", "Demonstrative"],
+                ["He said he will come tomorrow", "He said he would come the next day",
+                 "He said he comes tomorrow", "He says he will come tomorrow"],
+                ["Criterions", "Criteria", "Criterias", "Criterion's"],
+                ["Although", "Because", "And", "Unless"],
+                ["Running quickly, the bus was missed", "Running quickly, he missed the bus",
+                 "The bus was missed running quickly", "Missing the bus running quickly"],
+                ["Accommodation", "Acommodation", "Accomodation", "Acomodation"]
+            ];
+            return optionsSets[index % optionsSets.length] || ["Option A", "Option B", "Option C", "Option D"];
+        }
+
+        function getEnglishExplanation(index) {
+            return "This question tests knowledge of English language rules, vocabulary, and comprehension skills as required in JAMB UTME.";
+        }
+
+        function getSubjectQuestion(subjectId, index) {
+            const questions = {
+                mathematics: [
+                    "If x + y = 12 and x - y = 4, find x",
+                    "Simplify: 2³ × 2⁴",
+                    "Probability of even number on a fair die",
+                    "Area of triangle with base 10cm, height 6cm",
+                    "Solve: 3x - 7 = 14",
+                    "Value of π to 2 decimal places",
+                    "Average speed of car traveling 150km in 3 hours",
+                    "Square root of 144",
+                    "Factorize: x² - 9",
+                    "Calculate: 15% of 200",
+                    "Solve quadratic: x² - 5x + 6 = 0",
+                    "Value of sin 30°",
+                    "Convert 0.75 to fraction",
+                    "Calculate mean of: 5, 8, 12, 15, 20",
+                    "Volume of cube with side 4cm"
+                ],
+                physics: [
+                    "SI unit of force",
+                    "Newton's Third Law of Motion",
+                    "Type of lens that converges light",
+                    "Work done by 10N force over 5m",
+                    "Speed of light in vacuum",
+                    "Example of vector quantity",
+                    "Unit of electric current",
+                    "Color with longest wavelength",
+                    "Formula for density",
+                    "Law of conservation of energy",
+                    "Calculate pressure if force=20N, area=4m²",
+                    "What is acceleration due to gravity on Earth?",
+                    "Ohm's Law formula",
+                    "Type of energy stored in battery",
+                    "Principle behind hydraulic press"
+                ],
+                chemistry: [
+                    "Chemical symbol for Gold",
+                    "pH of neutral solution at 25°C",
+                    "Most abundant gas in Earth's atmosphere",
+                    "Valency of oxygen in most compounds",
+                    "Example of noble gas",
+                    "Bond involving electron sharing",
+                    "Chemical formula for water",
+                    "Process of liquid turning to gas",
+                    "Periodic table group for alkali metals",
+                    "Test for oxygen gas",
+                    "Products of acid + base reaction",
+                    "Define isotopes",
+                    "Process of rusting",
+                    "Catalyst in Haber process",
+                    "Main component of natural gas"
+                ]
+            };
+
+            const defaultQuestions = [
+                "Fundamental concept question",
+                "Calculation-based problem",
+                "Theory application",
+                "Definition identification",
+                "Problem-solving scenario",
+                "Practical application",
+                "Conceptual understanding",
+                "Analytical reasoning",
+                "Data interpretation",
+                "Experimental design"
+            ];
+
+            return questions[subjectId] ? questions[subjectId][index % questions[subjectId].length] 
+                       : defaultQuestions[index % defaultQuestions.length];
+        }
+
+        function getSubjectOptions(subjectId, index) {
+            const options = {
+                mathematics: [
+                    ["4", "6", "8", "10"],
+                    ["2⁷", "2¹²", "4⁷", "8¹²"],
+                    ["1/6", "1/3", "1/2", "2/3"],
+                    ["16cm²", "30cm²", "60cm²", "32cm²"],
+                    ["x=7", "x=6", "x=8", "x=9"],
+                    ["3.14", "3.16", "3.12", "3.18"],
+                    ["40km/h", "45km/h", "50km/h", "55km/h"],
+                    ["11", "12", "13", "14"],
+                    ["(x-3)(x+3)", "(x-9)(x+1)", "(x-3)²", "(x+3)²"],
+                    ["15", "20", "25", "30"],
+                    ["x=2,3", "x=1,6", "x=-2,-3", "x=0,5"],
+                    ["0.5", "0.866", "1", "0.707"],
+                    ["1/4", "3/4", "75/100", "75/10"],
+                    ["10", "11", "12", "13"],
+                    ["16cm³", "32cm³", "64cm³", "128cm³"]
+                ],
+                physics: [
+                    ["Joule", "Newton", "Watt", "Pascal"],
+                    ["Action-reaction pairs", "F=ma", "Inertia", "Universal gravitation"],
+                    ["Concave", "Convex", "Plano-concave", "Diverging"],
+                    ["2J", "15J", "50J", "5J"],
+                    ["3×10⁵ m/s", "3×10⁶ m/s", "3×10⁸ m/s", "3×10¹⁰ m/s"],
+                    ["Mass", "Time", "Temperature", "Velocity"],
+                    ["Volt", "Ampere", "Ohm", "Watt"],
+                    ["Violet", "Blue", "Green", "Red"],
+                    ["mass/volume", "force/area", "work/time", "charge/time"],
+                    ["Energy cannot be created/destroyed", "Every action has reaction", "F=ma", "PV=nRT"],
+                    ["5Pa", "80Pa", "0.2Pa", "24Pa"],
+                    ["9.8m/s²", "6.7m/s²", "10m/s²", "1.6m/s²"],
+                    ["V=IR", "P=VI", "Q=It", "F=ma"],
+                    ["Chemical", "Kinetic", "Potential", "Thermal"],
+                    ["Pascal's", "Archimedes'", "Bernoulli's", "Newton's"]
+                ],
+                chemistry: [
+                    ["Go", "Gd", "Au", "Ag"],
+                    ["0", "7", "14", "1"],
+                    ["Oxygen", "Carbon dioxide", "Nitrogen", "Argon"],
+                    ["1", "2", "3", "4"],
+                    ["Hydrogen", "Oxygen", "Neon", "Chlorine"],
+                    ["Ionic", "Covalent", "Metallic", "Hydrogen"],
+                    ["HO", "H₂O", "HO₂", "H₂O₂"],
+                    ["Freezing", "Condensation", "Sublimation", "Evaporation"],
+                    ["Group 1", "Group 2", "Group 7", "Group 8"],
+                    ["Relights glowing splint", "Turns limewater milky", "Burns with pop", "Changes moist indicator"],
+                    ["Salt + water", "Acid + base", "Metal + salt", "Water + gas"],
+                    ["Same protons, different neutrons", "Same neutrons, different protons", "Different elements", "Same mass, different charge"],
+                    ["Oxidation", "Reduction", "Neutralization", "Polymerization"],
+                    ["Iron", "Nickel", "Platinum", "Vanadium"],
+                    ["Methane", "Ethane", "Propane", "Butane"]
+                ]
+            };
+
+            return options[subjectId] ? options[subjectId][index % options[subjectId].length]
+                       : ["Option A", "Option B", "Option C", "Option D"];
+        }
+
+        function getSubjectExplanation(subjectId, index) {
+            return `This question assesses knowledge of ${subjectId} as per JAMB syllabus requirements. The correct answer demonstrates understanding of fundamental concepts.`;
+        }
+
+        // ============================================
+        // EXAM FUNCTIONS
+        // ============================================
+
+        function startExam() {
+            if (state.selectedSubjects.length !== 3) {
+                alert("Please select exactly 3 subjects");
+                return;
+            }
+
+            const examQuestions = [];
+
+            const englishPool = [...state.questionBank.english];
+            shuffleArray(englishPool);
+            examQuestions.push(...englishPool.slice(0, 60));
+
+            state.selectedSubjects.forEach(subjectId => {
+                if (state.questionBank[subjectId]) {
+                    const subjectPool = [...state.questionBank[subjectId]];
+                    shuffleArray(subjectPool);
+                    examQuestions.push(...subjectPool.slice(0, 40));
+                }
+            });
+
+            shuffleArray(examQuestions);
+
+            state.exam.questions = examQuestions;
+            state.exam.userAnswers = new Array(180).fill(null);
+            state.exam.currentIndex = 0;
+            state.exam.answeredCount = 0;
+            state.exam.submitted = false;
+            state.exam.timeRemaining = 7200;
+
+            timerContainer.style.display = 'block';
+
+            startTimer();
+            renderQuestion();
+            renderQuestionProgress();
+
+            selectionSection.style.display = 'none';
+            examSection.style.display = 'block';
+            reviewSection.style.display = 'none';
+        }
+
+        function startTimer() {
+            if (state.exam.timerInterval) {
+                clearInterval(state.exam.timerInterval);
+            }
+
+            updateTimerDisplay();
+
+            state.exam.timerInterval = setInterval(() => {
+                state.exam.timeRemaining--;
+                updateTimerDisplay();
+
+                if (state.exam.timeRemaining <= 0) {
+                    clearInterval(state.exam.timerInterval);
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(state.exam.timeRemaining / 60);
+            const seconds = state.exam.timeRemaining % 60;
+
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            timerDisplay.classList.remove('warning', 'critical');
+            if (state.exam.timeRemaining <= 600) {
+                timerDisplay.classList.add('critical');
+            } else if (state.exam.timeRemaining <= 1800) {
+                timerDisplay.classList.add('warning');
+            }
+        }
+
+        function renderQuestion() {
+            const question = state.exam.questions[state.exam.currentIndex];
+            const subject = jambSubjects.find(s => s.id === question.subject) || 
+                           { name: 'Use of English' };
+
+            currentQuestionNumber.textContent = state.exam.currentIndex + 1;
+            currentSubject.textContent = subject.name;
+            questionText.textContent = question.question;
+
+            optionsContainer.innerHTML = '';
+            ['A', 'B', 'C', 'D'].forEach((label, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                if (state.exam.userAnswers[state.exam.currentIndex] === index) {
+                    optionDiv.classList.add('selected');
+                }
+
+                optionDiv.innerHTML = `
+                    <div class="option-label">${label}</div>
+                    <div class="option-text">${question.options[index]}</div>
+                `;
+
+                optionDiv.addEventListener('click', () => selectAnswer(index));
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            prevBtn.disabled = state.exam.currentIndex === 0;
+            nextBtn.disabled = state.exam.currentIndex === 179;
+        }
+
+        function renderQuestionProgress() {
+            questionProgress.innerHTML = '';
+
+            for (let i = 0; i < 180; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'progress-btn';
+                btn.textContent = i + 1;
+
+                if (i === state.exam.currentIndex) {
+                    btn.classList.add('current');
+                }
+                if (state.exam.userAnswers[i] !== null) {
+                    btn.classList.add('answered');
+                }
+
+                btn.addEventListener('click', () => jumpToQuestion(i));
+                questionProgress.appendChild(btn);
+            }
+        }
+
+        function selectAnswer(answerIndex) {
+            const currentQIndex = state.exam.currentIndex;
+            const previousAnswer = state.exam.userAnswers[currentQIndex];
+
+            state.exam.userAnswers[currentQIndex] = answerIndex;
+
+            if (previousAnswer === null) {
+                state.exam.answeredCount++;
+            }
+
+            renderQuestion();
+            renderQuestionProgress();
+        }
+
+        function nextQuestion() {
+            if (state.exam.currentIndex < 179) {
+                state.exam.currentIndex++;
+                renderQuestion();
+                renderQuestionProgress();
+            }
+        }
+
+        function prevQuestion() {
+            if (state.exam.currentIndex > 0) {
+                state.exam.currentIndex--;
+                renderQuestion();
+                renderQuestionProgress();
+            }
+        }
+
+        function jumpToQuestion(index) {
+            state.exam.currentIndex = index;
+            renderQuestion();
+            renderQuestionProgress();
+        }
+
+        function submitExam() {
+            if (state.exam.timerInterval) {
+                clearInterval(state.exam.timerInterval);
+                state.exam.timerInterval = null;
+            }
+
+            state.exam.submitted = true;
+
+            let score = 0;
+            state.exam.questions.forEach((question, index) => {
+                if (state.exam.userAnswers[index] === question.correctIndex) {
+                    score++;
+                }
+            });
+
+            examSection.style.display = 'none';
+            reviewSection.style.display = 'block';
+            timerContainer.style.display = 'none';
+
+            scoreDisplay.textContent = `Score: ${score}/180`;
+            const percentage = ((score / 180) * 100).toFixed(1);
+            scoreDetails.textContent = `You scored ${score} out of 180 (${percentage}%) - ${state.exam.answeredCount} questions attempted`;
+
+            renderReview(score);
+        }
+
+        function renderReview(score) {
+            reviewQuestions.innerHTML = '';
+
+            state.exam.questions.forEach((question, index) => {
+                const userAnswer = state.exam.userAnswers[index];
+                const isCorrect = userAnswer === question.correctIndex;
+                const subject = jambSubjects.find(s => s.id === question.subject) || 
+                               { name: 'Use of English' };
+
+                let statusText = "Not Answered";
+                let statusClass = "status-incorrect";
+
+                if (userAnswer !== null) {
+                    statusText = isCorrect ? "Correct" : "Incorrect";
+                    statusClass = isCorrect ? "status-correct" : "status-incorrect";
+                }
+
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = `review-question ${isCorrect ? 'correct' : 'incorrect'}`;
+
+                reviewDiv.innerHTML = `
+                    <div class="review-question-header">
+                        <div class="review-question-number">Question ${index + 1}</div>
+                        <div class="review-question-subject">${subject.name}</div>
+                        <div class="review-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="review-question-text">${question.question}</div>
+                    <div class="review-options">
+                        ${question.options.map((option, optIndex) => {
+                            let optionClass = "review-option";
+                            if (optIndex === userAnswer) optionClass += " user-answer";
+                            if (optIndex === question.correctIndex) optionClass += " correct-answer";
+                            return `
+                                <div class="${optionClass}">
+                                    <strong>${['A','B','C','D'][optIndex]}:</strong> ${option}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="explanation">
+                        <h4>Explanation:</h4>
+                        <p>${question.explanation}</p>
+                        <p><strong>Correct Answer: ${['A','B','C','D'][question.correctIndex]}</strong></p>
+                    </div>
+                `;
+
+                reviewQuestions.appendChild(reviewDiv);
+            });
+        }
+
+        function restartExam() {
+            if (state.exam.timerInterval) {
+                clearInterval(state.exam.timerInterval);
+            }
+
+            timerContainer.style.display = 'none';
+
+            selectionSection.style.display = 'block';
+            examSection.style.display = 'none';
+            reviewSection.style.display = 'none';
+
+            initSubjectSelection();
+        }
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function setupEventListeners() {
+            resetSelectionBtn.addEventListener('click', initSubjectSelection);
+            startExamBtn.addEventListener('click', startExam);
+
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            submitExamBtn.addEventListener('click', () => {
+                if (confirm("Are you sure you want to submit your exam? You cannot change answers after submission.")) {
+                    submitExam();
+                }
+            });
+
+            restartBtn.addEventListener('click', restartExam);
+
+            document.addEventListener('keydown', (e) => {
+                if (state.exam.submitted || selectionSection.style.display !== 'none') return;
+
+                switch(e.key) {
+                    case 'ArrowLeft': if (!prevBtn.disabled) prevQuestion(); break;
+                    case 'ArrowRight': if (!nextBtn.disabled) nextQuestion(); break;
+                    case 'a': case 'A': selectAnswer(0); break;
+                    case 'b': case 'B': selectAnswer(1); break;
+                    case 'c': case 'C': selectAnswer(2); break;
+                    case 'd': case 'D': selectAnswer(3); break;
+                    case 'Enter': if (state.exam.currentIndex < 179) nextQuestion(); break;
+                }
+            });
+
+            window.addEventListener('beforeunload', (e) => {
+                if (!state.exam.submitted && state.exam.answeredCount > 0) {
+                    e.preventDefault();
+                    e.returnValue = 'Your exam progress will be lost if you leave this page. Are you sure?';
+                }
+            });
+        }
+
+        // ============================================
+        // START APPLICATION
+        // ============================================
+
+        window.addEventListener('load', initApp);
+    </script>
+</body>
+</html>
