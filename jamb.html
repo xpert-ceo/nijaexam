@@ -9,6 +9,8 @@
     <script src="https://pl28566969.effectivegatecpm.com/ce/00/e5/ce00e5e41764072d24556a9b91031875.js"></script>
     <script async="async" data-cfasync="false" src="https://pl28571295.effectivegatecpm.com/59d0218915ec3bd8ab122322d3c4f9c9/invoke.js"></script>
 
+     <script src="https://pl28580071.effectivegatecpm.com/4a/f9/44/4af94409bd5ded86650a567e2b96226f.js"></script>
+
     <style>
         /* CSS Reset */
         * {
@@ -1483,11 +1485,84 @@
             });
         }
 
+        // ===============================
+// SMART ADSTERAA AD TRIGGERS
+// ===============================
+
+let adShownOnSecondSubject = false;
+let adShownOnExamStart = false;
+let examAdInterval = null;
+let adShownBeforeResult = false;
+
+// Helper: trigger social bar reload safely
+function triggerSocialBar() {
+    try {
+        const script = document.createElement('script');
+        script.src = "https://pl28580071.effectivegatecpm.com/4a/f9/44/4af94409bd5ded86650a567e2b96226f.js";
+        document.body.appendChild(script);
+    } catch (e) {
+        console.warn("Ad trigger failed", e);
+    }
+}
+
+        let socialBarShown = {
+    entry: false,
+    examStart: false,
+    beforeResult: false
+};
+
+function triggerSocialBarSafe() {
+    try {
+        const s = document.createElement("script");
+        s.src = "https://pl28580071.effectivegatecpm.com/4a/f9/44/4af94409bd5ded86650a567e2b96226f.js";
+        s.async = true;
+        document.body.appendChild(s);
+    } catch (e) {
+        console.warn("Social bar failed safely");
+    }
+}
+
+/* ENTRY AD (after page stabilizes) */
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        if (!socialBarShown.entry) {
+            triggerSocialBarSafe();
+            socialBarShown.entry = true;
+        }
+    }, 2000);
+});
+
+/* EXAM START AD */
+const originalStartExam = window.startExam;
+window.startExam = function () {
+    if (!socialBarShown.examStart) {
+        setTimeout(triggerSocialBarSafe, 1200);
+        socialBarShown.examStart = true;
+    }
+    originalStartExam();
+};
+
+/* BEFORE RESULT AD */
+const originalSubmitExam = window.submitExam;
+window.submitExam = function () {
+    if (!socialBarShown.beforeResult) {
+        triggerSocialBarSafe();
+        socialBarShown.beforeResult = true;
+    }
+    originalSubmitExam();
+};
+
+
         // ============================================
         // START APPLICATION
         // ============================================
 
         window.addEventListener('load', initApp);
+
+
     </script>
+
+
+
 </body>
 </html>
