@@ -1485,10 +1485,105 @@
             });
         }
 
-        // ===============================
+       
+
+        /* 🎯 STREAK COUNTER (Front-End Only) */
+
+function getTodayDateString() {
+    const now = new Date();
+    return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+}
+
+function loadStreakData() {
+    const data = localStorage.getItem("jambPracticeStreak");
+    if (!data) return { lastDate: null, count: 0 };
+    try {
+        return JSON.parse(data);
+    } catch {
+        return { lastDate: null, count: 0 };
+    }
+}
+
+function saveStreakData(streak) {
+    localStorage.setItem("jambPracticeStreak", JSON.stringify(streak));
+}
+
+function updateStreakOnPractice() {
+    const today = getTodayDateString();
+    const streak = loadStreakData();
+
+    if (streak.lastDate === today) {
+        // Already updated today
+        return streak.count;
+    }
+
+    const last = streak.lastDate;
+    if (!last) {
+        // First time
+        streak.count = 1;
+    } else {
+        const lastTime = new Date(last).getTime();
+        const todayTime = new Date(today).getTime();
+        const diff = (todayTime - lastTime) / (1000 * 60 * 60 * 24);
+
+        // +1 streak if yesterday
+        if (diff === 1) streak.count += 1;
+        else streak.count = 1;
+    }
+    streak.lastDate = today;
+    saveStreakData(streak);
+
+    return streak.count;
+}
+
+function showStreakBanner(count) {
+    const existing = document.getElementById("streakBanner");
+    if (existing) return;
+
+    const banner = document.createElement("div");
+    banner.id = "streakBanner";
+    banner.style = `
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #27ae60;
+        color: white;
+        padding: 14px 22px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+    `;
+
+    banner.innerText = `🔥 Your JAMB Practice Streak: ${count} day${count > 1 ? "s" : ""}! Keep it going!`;
+
+    document.body.appendChild(banner);
+
+    setTimeout(() => {
+        banner.style.transition = "opacity 0.4s";
+        banner.style.opacity = "0";
+        setTimeout(() => banner.remove(), 800);
+    }, 4500);
+}
+
+/* Hook the streak increment to whenever user starts practice */
+function handleStreakOnExamStart() {
+    const newCount = updateStreakOnPractice();
+    showStreakBanner(newCount);
+}
+
+/* Attach this to your startExam trigger */
+const originalStartExamFunction = startExam;
+startExam = function() {
+    handleStreakOnExamStart();
+    originalStartExamFunction();
+};
+
+     // ===============================
 // SMART ADSTERAA AD TRIGGERS
 // ===============================
-
 let adShownOnSecondSubject = false;
 let adShownOnExamStart = false;
 let examAdInterval = null;
